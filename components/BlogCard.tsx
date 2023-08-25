@@ -6,6 +6,9 @@ interface Props {
     description: string;
 }
 
+/**
+ * FC as a type here means that this component is a Functional Component.
+ */
 const BlogCard: FC<Props> = ({title, description}): JSX.Element => {
     return (
         <div className="bg-green-100 p-2 rounded">
