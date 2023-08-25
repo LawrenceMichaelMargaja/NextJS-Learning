@@ -1,0 +1,19 @@
+VS code shortcuts:
+
+1. holding shift and alt while pressing down or up duplicates the highlighted code.
+
+2. If you want to select the next instance of a code or text, you can highlight one instance and then press ctrl + d.
+
+3. You can also select multiple lines of code by pressing the alt and then clicking on the text or code that you also want to select.
+
+4. To toggle the terminal, you can press ctrl + j
+
+5. For global search, you can press ctrl + p
+
+6. If you want to create a file inside a folder, you can select "create new file" and when asked to name the file, you also add the name of the directory but separate it from the name of the actual file with a forward slash.
+
+Here is an example: If you want to create the file "userNav.tsx" inside of a "nav" folder
+
+you can select "create new file" and the name it "nav/userNav.tsx" and the ide will automaticall create the folder for you.
+
+7. Pressing shift + del cuts an entire line of text or code. Exactly the same as ctrl + x
