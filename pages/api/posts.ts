@@ -1,11 +1,31 @@
 import { NextApiHandler } from "next";
+import fs from 'fs';
+import path from 'path';
 
-const handler: NextApiHandler = (request, response) => {
+/**
+ * FS - The fs (File System) module in Node.js provides an API for interacting with the file system on the server. 
+ */
 
+const readPostsInfo = () => {
+    const dirPathToRead = path.join(process.cwd(), "posts")
+    const dirs =  fs.readdirSync(dirPathToRead);
+    dirs.map((fileName) => {
+        const filePathToRead = path.join(process.cwd(), "posts/" + fileName);
+        const fileContent = fs.readFileSync(filePathToRead, {encoding: 'utf-8'});
+        console.log("the file content === ", fileContent);
+
+        return "";
+    });
+} 
+
+const handler: NextApiHandler = (request, response) => {   
     const { method } = request;
 
     switch(method) {
-        case "GET": return response.json({ok: true});
+        case "GET": {
+            const data = readPostsInfo()
+            return response.json({postInfo: data});
+        }
         default: return response.status(404).send('Not Found');
     }
 }
