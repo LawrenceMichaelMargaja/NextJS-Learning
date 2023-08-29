@@ -1,23 +1,32 @@
 import BlogCard from '@/components/BlogCard';
 import { NextPage } from 'next';
+import { useEffect, useState } from 'react';
 
 interface Props {}
 
 const Blogs: NextPage<Props> = () => {
+
+    const [posts, setPosts] = useState<{title: string; slug: string; meta: string;}[]>([]);
+
+    const fetchPosts = async () => {
+        const res = await fetch('api/posts').then(data => data.json());
+
+        // console.log("the res === ", res);
+
+        setPosts(res.postInfo);
+    }
+
+    useEffect(() => {
+        fetchPosts()
+    }, [])
+
     return (
         <div className='max-w-3xl mx-auto p-5 space-y-5'>
-            <BlogCard
-                title="This is my Blog."
-                description='Lorem ipsum dolor, sit amet consectetur adipisicing elit. Assumenda ad modi rerum corrupti itaque animi non hic nostrum officia debitis?'
-            />
-            <BlogCard
-                title="This is my Blog."
-                description='Lorem ipsum dolor, sit amet consectetur adipisicing elit. Assumenda ad modi rerum corrupti itaque animi non hic nostrum officia debitis?'
-            />
-            <BlogCard
-                title="This is my Blog."
-                description='Lorem ipsum dolor, sit amet consectetur adipisicing elit. Assumenda ad modi rerum corrupti itaque animi non hic nostrum officia debitis?'
-            />
+            {posts.map(post => <BlogCard
+                key={post.slug}
+                title={post.title}
+                description={post.meta}
+            />)}
         </div>
     )
 }

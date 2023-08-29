@@ -1,4 +1,5 @@
 import { NextApiHandler } from "next";
+import matter from 'gray-matter';
 import fs from 'fs';
 import path from 'path';
 
@@ -9,13 +10,13 @@ import path from 'path';
 const readPostsInfo = () => {
     const dirPathToRead = path.join(process.cwd(), "posts")
     const dirs =  fs.readdirSync(dirPathToRead);
-    dirs.map((fileName) => {
+    const data = dirs.map((fileName) => {
         const filePathToRead = path.join(process.cwd(), "posts/" + fileName);
         const fileContent = fs.readFileSync(filePathToRead, {encoding: 'utf-8'});
-        console.log("the file content === ", fileContent);
-
-        return "";
+        return matter(fileContent).data;
     });
+
+    return data;
 } 
 
 const handler: NextApiHandler = (request, response) => {   
