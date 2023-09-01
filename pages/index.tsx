@@ -1,16 +1,40 @@
-import React from 'react'
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
-import { NextPage } from 'next'
+import BlogCard from '@/components/BlogCard';
+import { readPostsInfo } from '@/lib/helper';
+import { PostApiResponse } from '@/utils/types';
+import { InferGetStaticPropsType } from 'next';
+import { GetStaticProps, NextPage } from 'next';
 
-const inter = Inter({ subsets: ['latin'] })
 
-const Home: NextPage = () => {
-  return (
-    <h1 className='text-3xl font-bold underline text-gray-500'>
-      Hello world!
-    </h1>
-  );
+/**
+ * This functions 
+ */
+export const getStaticProps = async () => {
+    /**
+     * Fetching an api inside of this function or in getStaticPaths causes an error because  
+     */
+    // const {postInfo}: PostApiResponse = await fetch('http://localhost:3000/api/posts').then(data => data.json());
+
+    const postInfo: PostApiResponse = readPostsInfo()
+
+    return {
+        props: {posts: postInfo}
+    }
 }
 
-export default Home;
+type Props = InferGetStaticPropsType<typeof getStaticProps>
+
+const Blogs: NextPage<Props> = ({posts}) => {
+
+    return (
+        <div className='max-w-3xl mx-auto p-5 space-y-5'>
+            {posts.map(post => <BlogCard
+                key={post.slug}
+                title={post.title}
+                description={post.meta}
+                slug={post.slug} 
+            />)}
+        </div>
+    )
+}
+
+export default Blogs;
