@@ -5,6 +5,9 @@ import { InferGetStaticPropsType } from 'next';
 import { GetStaticProps, NextPage } from 'next';
 
 
+/**
+ * This functions 
+ */
 export const getStaticProps = async () => {
     /**
      * Fetching an api inside of this function or in getStaticPaths causes an error because  
